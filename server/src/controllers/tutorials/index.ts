@@ -37,7 +37,7 @@ export class TutorialController {
     }
     try {
       newTutorial = await Tutorial.create(tutorial);
-      return res.send(newTutorial);
+      return res.status(201).send(newTutorial);
     } catch (e) {
       return res.status(500).send(e);
     }
@@ -64,7 +64,7 @@ export class TutorialController {
     }
     try {
       tutorialToUpdate?.update(tutorial);
-      return res.send(tutorialToUpdate);
+      return res.status(201).send(tutorialToUpdate);
     } catch (e) {
       return res.status(500).send(e);
     }
