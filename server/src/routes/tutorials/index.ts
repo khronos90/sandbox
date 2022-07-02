@@ -1,7 +1,5 @@
 import express from 'express';
 import { TutorialController } from '../../controllers';
-import { ITutorialInput } from '../../db/models/tutorial';
-import { TypedRequestBody } from '../../types/types';
 
 const router = express.Router();
 
