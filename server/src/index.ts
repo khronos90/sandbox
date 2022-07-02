@@ -5,8 +5,12 @@ dotenv.config();
 import { db } from './db';
 import Tutorial from './db/models/tutorial';
 
+import router from './routes';
+
 const app = express();
-const port = 3001;
+const port = process.env.PORT;
+
+app.use('/', router);
 
 app.listen(port, async () => {
   console.log(`App started at port ${port}`);

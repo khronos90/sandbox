@@ -1,4 +1,4 @@
-export { };
+export {};
 
 declare global {
   namespace NodeJS {
@@ -7,6 +7,7 @@ declare global {
       DB_PASSWORD: string;
       HOST: string;
       ENV: string;
+      PORT: number;
     }
   }
 }
