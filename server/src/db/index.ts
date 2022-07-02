@@ -1,10 +1,7 @@
-import { Sequelize } from 'sequelize';
-import { dbConfig } from './config/db';
-
-const sequelize = new Sequelize({
-  ...dbConfig,
-})
+import { sequelize } from './db';
+import Tutorial from './models/tutorial';
 
 export const db = {
-  sequelize
-}
+  sequelize,
+  Tutorial,
+};

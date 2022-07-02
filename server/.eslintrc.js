@@ -6,6 +6,12 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
+    "@typescript-eslint/no-empty-interface": [
+      "error",
+      {
+        "allowSingleExtends": true
+      }
+    ]
   },
   extends: ["plugin:@typescript-eslint/recommended"],
   env: {

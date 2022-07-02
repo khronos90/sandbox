@@ -1,13 +1,32 @@
-import { DataTypes, Model } from 'sequelize';
-import { db } from '..';
+import { DataTypes, InferAttributes, InferCreationAttributes, Model, Optional } from 'sequelize';
+import { sequelize } from '../db';
 
-class Tutorial extends Model {
+interface ITutorial {
+  id: string;
+  title: string;
+  videoUrl?: string;
+  description?: string;
+  published: boolean;
+  deleted?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+}
+
+export interface ITutorialInput extends Optional<ITutorial, 'id'> {}
+
+export interface ITutorialOutput extends Required<ITutorial> {}
+
+class Tutorial extends Model<ITutorial, ITutorialInput> implements ITutorial {
   declare id: string;
   declare title: string;
   declare videoUrl?: string;
   declare description?: string;
   declare published: boolean;
   declare deleted?: boolean;
+  declare createdAt?: Date;
+  declare updatedAt?: Date;
+  declare deletedAt?: Date;
 }
 
 Tutorial.init(
@@ -38,12 +57,11 @@ Tutorial.init(
     },
   },
   {
-    sequelize: db.sequelize,
+    sequelize: sequelize,
     modelName: 'Tutorial',
+    paranoid: true,
+    timestamps: true,
   },
 );
 
 export default Tutorial;
-
-// the defined model is the class itself
-console.log(Tutorial === db.sequelize.models.User); // true
