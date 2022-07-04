@@ -3,6 +3,7 @@ interface Params {
 }
 
 export interface TypedRequestBody<T> extends Express.Request {
+  headers: any;
   body: T;
   params: Params;
 }

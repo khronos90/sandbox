@@ -3,6 +3,7 @@ import Tutorial, { ITutorialInput } from '../../db/models/tutorial';
 import { ErrorMessage, TypedRequestBody } from '../../types/types';
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import { v1 } from 'uuid';
+import jwtDecode from 'jwt-decode';
 
 export class TutorialController {
   static async getTutorials(req: Request, res: Response) {
@@ -29,10 +30,16 @@ export class TutorialController {
     }
   }
 
-  static async createTutorial({ body }: TypedRequestBody<ITutorialInput>, res: Response) {
+  static async createTutorial({ body, headers }: TypedRequestBody<ITutorialInput>, res: Response) {
     const tutorial: ITutorialInput = body;
     tutorial.id = v1();
     let newTutorial: Tutorial | null;
+
+    const customValidation = TutorialController.validateTimestamp(headers);
+    if (customValidation === 'invalid') {
+      return res.sendStatus(401);
+    }
+
     const errors = TutorialController.validateBody(tutorial);
     if (errors.length) {
       return res.status(400).send(errors);
@@ -99,5 +106,19 @@ export class TutorialController {
       }
     }
     return error;
+  }
+
+  private static validateTimestamp(headers: any): 'invalid' | 'valid' {
+    const timestampJwt = headers['x-request-timestamp'];
+    let { timestamp } = jwtDecode<{ timestamp: number }>(timestampJwt);
+    if (!timestamp) {
+      return 'invalid';
+    }
+    const now = Date.now();
+    const delta = now - (timestamp as number);
+    if (delta > 60 * 5 * 1000) {
+      return 'invalid';
+    }
+    return 'valid';
   }
 }
