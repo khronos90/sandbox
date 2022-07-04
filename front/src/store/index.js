@@ -1,6 +1,7 @@
 // stores/counter.js
 import { defineStore } from "pinia";
 import axios from "axios";
+import { jwtGenerator } from "../services/jwt";
 const API_URL = "http://localhost:3001/tutorials";
 
 export const useTutorials = defineStore("tutorials", {
@@ -88,10 +89,24 @@ export const useTutorials = defineStore("tutorials", {
       // Auth test
       // let creationDate = new Date(1990, 10, 10);
       let creationDate = new Date();
+      let jwt;
+      try {
+        const header = {
+          alg: "HS256",
+          typ: "JWT",
+        };
+        const payload = {
+          timestamp: creationDate.valueOf(),
+        };
+        const secret = "should be a build variable";
+        jwt = jwtGenerator({ header, payload, secret });
+      } catch (e) {
+        console.log(e);
+      }
       try {
         const newTutorial = await axios.post(`${API_URL}/`, tutorial, {
           headers: {
-            "X-request-timestamp": creationDate.valueOf(),
+            "X-request-timestamp": jwt,
           },
         });
         this.tutorial = newTutorial.data;

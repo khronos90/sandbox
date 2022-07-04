@@ -13,7 +13,7 @@ let tutorialModel = ref({
   title: "",
   description: "",
   published: false,
-  videoUrl: "",
+  videoUrl: "https://www.youtube.com/watch?v=UsnRGo4y5FQ&ab_channel=KennyGunderman",
 });
 let addTutorial = ref(false);
 

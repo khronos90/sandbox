@@ -9,7 +9,8 @@ defineProps({
     type: String,
   },
   selected: {
-    type: Boolean,
+    type: String,
+
   },
   onTutorialSelection: {
     type: Function,

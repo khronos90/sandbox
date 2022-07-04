@@ -39,7 +39,7 @@ const massDeleteTutorials = () => {
         :selected="selectedTutorial"
         :onTutorialSelection="tutorialSelected"
       >
-        <template v-slot="slotProps"> {{ slotProps }}</template>
+        <template v-slot="slotProps"> {{ slotProps.title }}</template>
       </TutorialListItem>
     </div>
     <button
