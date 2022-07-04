@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Tutorial, { ITutorialInput } from '../../db/models/tutorial';
 import { ErrorMessage, TypedRequestBody } from '../../types/types';
 import { sanitizeUrl } from '@braintree/sanitize-url';
+import { v1 } from 'uuid';
 
 export class TutorialController {
   static async getTutorials(req: Request, res: Response) {
@@ -30,6 +31,7 @@ export class TutorialController {
 
   static async createTutorial({ body }: TypedRequestBody<ITutorialInput>, res: Response) {
     const tutorial: ITutorialInput = body;
+    tutorial.id = v1();
     let newTutorial: Tutorial | null;
     const errors = TutorialController.validateBody(tutorial);
     if (errors.length) {
