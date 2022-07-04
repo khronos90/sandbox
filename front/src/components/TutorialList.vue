@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { useTutorials } from "../store";
+import TutorialListItem from "./TutorialListItem.vue";
 
 const tutorialStore = useTutorials();
 
@@ -30,17 +31,16 @@ const massDeleteTutorials = () => {
     <h2>Tutorials</h2>
     <hr />
     <div class="list-group" v-if="tutorials && tutorials.length">
-      <button
+      <TutorialListItem
         v-for="tutorial in tutorials"
         :key="tutorial.id"
-        @click="tutorialSelected(tutorial.id)"
-        type="button"
-        class="list-group-item list-group-item-action"
-        :class="tutorial.id == selectedTutorial ? 'active' : ''"
-        aria-current="true"
+        :title="tutorial.title"
+        :id="tutorial.id"
+        :selected="selectedTutorial"
+        :onTutorialSelection="tutorialSelected"
       >
-        {{ tutorial.title }}
-      </button>
+        <template v-slot="slotProps"> {{ slotProps }}</template>
+      </TutorialListItem>
     </div>
     <button
       @click="massDeleteTutorials"
