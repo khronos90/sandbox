@@ -25,7 +25,7 @@ const handleSearch = () => {
         aria-label="Buscar por título"
         aria-describedby="button-addon2"
       />
-      <button class="btn btn-outline-primary" type="button" id="button-addon2">
+      <button type="submit" class="btn btn-outline-primary" id="button-addon2">
         Buscar
       </button>
     </div>
