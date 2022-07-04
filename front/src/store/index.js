@@ -1,7 +1,6 @@
 // stores/counter.js
 import { defineStore } from "pinia";
 import axios from "axios";
-
 const API_URL = "http://localhost:3001/tutorials";
 
 export const useTutorials = defineStore("tutorials", {
@@ -86,12 +85,19 @@ export const useTutorials = defineStore("tutorials", {
       }
     },
     async createTutorial(tutorial) {
+      // Auth test
+      // let creationDate = new Date(1990, 10, 10);
+      let creationDate = new Date();
       try {
-        const newTutorial = await axios.post(`${API_URL}/`, tutorial);
+        const newTutorial = await axios.post(`${API_URL}/`, tutorial, {
+          headers: {
+            "X-request-timestamp": creationDate.valueOf(),
+          },
+        });
         this.tutorial = newTutorial.data;
       } catch (error) {
-        alert(error);
         console.log(error);
+        throw error;
       }
     },
     async updateTutorial(tutorial) {

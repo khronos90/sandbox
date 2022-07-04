@@ -18,6 +18,7 @@ let tutorialModel = ref({
 let addTutorial = ref(false);
 
 let errors = reactive({});
+let authError = ref(false);
 
 const validateVideoUrl = (videoUrl) => {
   const pattern = new RegExp(
@@ -53,8 +54,14 @@ const handleModelUpdate = (e) => {
       tutorialStore.updateTutorial(tutorialModel.value);
     } else {
       // Create case
-      tutorialStore.createTutorial(tutorialModel.value);
-      addTutorial.value = true;
+      tutorialStore
+        .createTutorial(tutorialModel.value)
+        .then((e) => {
+          addTutorial.value = true;
+        })
+        .catch((e) => {
+          authError.value = true;
+        });
     }
   }
 };
@@ -190,6 +197,9 @@ onMounted(async () => {
           </div>
         </div>
       </fieldset>
+      <div class="mb-3 text-danger" v-if="authError">
+        <p>Authentication error</p>
+      </div>
       <div class="mb-3">
         <button type="submit" class="btn btn-primary">
           {{ tutorialId ? "Actualizar" : "Guardar" }}

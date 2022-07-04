@@ -4,17 +4,19 @@ defineProps({
     type: String,
     default: "",
     validator(borderValue) {
-      return [
-        "primary",
-        "secondary",
-        "success",
-        "danger",
-        "warning",
-        "info",
-        "light",
-        "dark",
-        "white",
-      ].includes(borderValue);
+      if (borderValue) {
+        return [
+          "primary",
+          "secondary",
+          "success",
+          "danger",
+          "warning",
+          "info",
+          "light",
+          "dark",
+          "white",
+        ].includes(borderValue);
+      } else return true;
     },
   },
 });
