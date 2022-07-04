@@ -33,7 +33,7 @@ onMounted(() => {
       <TutorialDescription />
     </div>
   </div>
-  <CardNotification v-else-if="filter" :border="'border-danger'">
+  <CardNotification v-else-if="filter" :borderColor="'danger'">
     <template v-slot:description>
       No se encontraron tutoriales con el título "{{ filter.title }}"
     </template>

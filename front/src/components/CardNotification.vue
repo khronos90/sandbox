@@ -1,14 +1,27 @@
 <script setup>
 defineProps({
-  border: {
+  borderColor: {
     type: String,
     default: "",
+    validator(borderValue) {
+      return [
+        "primary",
+        "secondary",
+        "success",
+        "danger",
+        "warning",
+        "info",
+        "light",
+        "dark",
+        "white",
+      ].includes(borderValue);
+    },
   },
 });
 </script>
 
 <template>
-  <div class="card" :class="border">
+  <div class="card" :class="`border-${borderColor}`">
     <div class="card-body d-flex justify-content-center">
       <div>
         <h3>
